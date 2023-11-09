@@ -101,6 +101,7 @@ const ReviewItems = () => {
             onSubmit={handleSubmit(onSubmit)}
             name="checkout"
             data-netlify="true"
+            method="POST"
           >
             <CardBody>
               <Stack>
