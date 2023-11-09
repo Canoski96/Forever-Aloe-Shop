@@ -1,13 +1,14 @@
 "use client";
 import ProductCard from "@/components/ProductCard";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperOptions from "swiper";
-import { Autoplay, Navigation } from "swiper/modules";
 import { CSSProperties } from "react";
 import SwiperNavButtons from "@/components/SwiperNavButtons";
 import SectionHeading from "@/components/SectionHeading";
 import { Box } from "@chakra-ui/react";
 import { IProduct } from "@/app/model";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const slideStyles: CSSProperties = {
   boxSizing: "border-box",
@@ -20,29 +21,44 @@ interface FeaturedProductsProps {
 }
 
 const FeaturedProducts = ({ title, products }: FeaturedProductsProps) => {
-  const sliderSettings: SwiperOptions = {
-    modules: [Navigation, Autoplay],
-    spaceBetween: 10,
-    slidesPerView: "auto",
-    speed: 1000,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false,
-    },
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    responsive: [
+      {
+        breakpoint: 1025, // this means below 1024px viewport width
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768, // this means below 768px viewport width
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
     <Box w={{ base: "100%", lg: "90%" }} mx="auto" py="3rem" px="2rem">
       <SectionHeading title={title} />
-      <Swiper {...sliderSettings} style={{ width: "100%", height: "100%" }}>
+      <Slider {...sliderSettings}>
         {products?.map((product) => (
-          <SwiperSlide key={product.id} style={slideStyles}>
+          <div key={product.id} style={slideStyles}>
             <ProductCard product={product} />
-          </SwiperSlide>
+          </div>
         ))}
 
-        <SwiperNavButtons />
-      </Swiper>
+        {/* <SwiperNavButtons /> */}
+      </Slider>
     </Box>
   );
 };

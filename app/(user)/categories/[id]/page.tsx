@@ -49,7 +49,7 @@ const CategoryPage = async ({ params: { id } }: Props) => {
 
 export default CategoryPage;
 
-export async function generateStaticProps() {
+export async function generateStaticParams() {
   const query = groq`*[_type == "category"] {
     "id": _id
   }`;
