@@ -31,33 +31,32 @@ function encode(data: any) {
 const ReviewItems = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { register, handleSubmit } = useForm();
-  // const onSubmit = (data: any) => {
-  //   setIsSubmitting(true);
-  //   console.log(data);
-  //   setTimeout(() => {
-  //     setIsSubmitting(false);
-  //     toast.success("Вашата нарачка беше успешно испратена");
-  //   }, 2000);
-  // };
-
   const onSubmit = (data: any) => {
     setIsSubmitting(true);
-
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({ "form-name": "checkout", ...data }),
-    })
-      .then(() => {
-        setIsSubmitting(false);
-        toast.success("Вашата нарачка беше успешно испратена");
-      })
-      .catch((error) => {
-        setIsSubmitting(false);
-        console.log("Error", error);
-        toast.error("Има проблем при испраќањето на нарачката.");
-      });
+    setTimeout(() => {
+      setIsSubmitting(false);
+      toast.success("Вашата нарачка беше успешно испратена");
+    }, 2000);
   };
+
+  // const onSubmit = (data: any) => {
+  //   setIsSubmitting(true);
+
+  //   fetch("/", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  //     body: encode({ "form-name": "checkout", ...data }),
+  //   })
+  //     .then(() => {
+  //       setIsSubmitting(false);
+  //       toast.success("Вашата нарачка беше успешно испратена");
+  //     })
+  //     .catch((error) => {
+  //       setIsSubmitting(false);
+  //       console.log("Error", error);
+  //       toast.error("Има проблем при испраќањето на нарачката.");
+  //     });
+  // };
 
   const [subTotal, setSubTotal] = useState<number>(0);
   const [discount, setDiscount] = useState<number>(0);
