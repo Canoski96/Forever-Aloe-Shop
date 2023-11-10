@@ -21,42 +21,50 @@ import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.css";
+import emailjs from "emailjs-com";
 
-function encode(data: any) {
-  return Object.keys(data)
-    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&");
-}
+// function encode(data: any) {
+//   return Object.keys(data)
+//     .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+//     .join("&");
+// }
 
 const ReviewItems = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data: any) => {
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast.success("Вашата нарачка беше успешно испратена");
-    }, 2000);
-  };
 
   // const onSubmit = (data: any) => {
   //   setIsSubmitting(true);
+  //   console.log(data);
 
-  //   fetch("/", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //     body: encode({ "form-name": "checkout", ...data }),
-  //   })
-  //     .then(() => {
-  //       setIsSubmitting(false);
-  //       toast.success("Вашата нарачка беше успешно испратена");
-  //     })
-  //     .catch((error) => {
-  //       setIsSubmitting(false);
-  //       console.log("Error", error);
-  //       toast.error("Има проблем при испраќањето на нарачката.");
-  //     });
+  //   setTimeout(() => {
+  //     setIsSubmitting(false);
+  //     toast.success("Вашата нарачка беше успешно испратена");
+  //   }, 2000);
   // };
+
+  const onSubmit = (data: any) => {
+    setIsSubmitting(true);
+    console.log(data);
+
+    emailjs
+      .sendForm(
+        "service_57emddb",
+        "template_wxjbckd",
+        "#checkout-form",
+        "mL2WS0og0SWy_9pNn"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          setIsSubmitting(false);
+          toast.success("Вашата нарачка беше успешно испратена");
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
 
   const [subTotal, setSubTotal] = useState<number>(0);
   const [discount, setDiscount] = useState<number>(0);
@@ -124,7 +132,6 @@ const ReviewItems = () => {
             id="checkout-form"
             onSubmit={handleSubmit(onSubmit)}
             name="checkout"
-            data-netlify="true"
           >
             <input type="hidden" name="form-name" value="checkout" />
             <CardBody>
