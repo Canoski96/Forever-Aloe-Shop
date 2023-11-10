@@ -128,7 +128,7 @@ const ReviewItems = () => {
             data-netlify="true"
             method="POST"
           >
-            <input type="hidden" name="form-name" value="checkout" />
+            <input type="hidden" name="checkout" value="checkout" />
             <CardBody>
               <Stack>
                 <Box>
