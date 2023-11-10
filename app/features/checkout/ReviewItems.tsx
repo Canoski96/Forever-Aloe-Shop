@@ -126,7 +126,6 @@ const ReviewItems = () => {
             onSubmit={handleSubmit(onSubmit)}
             name="checkout"
             data-netlify="true"
-            method="POST"
           >
             <input type="hidden" name="form-name" value="checkout" />
             <CardBody>
